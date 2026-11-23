@@ -1,0 +1,23 @@
+# ==========================================
+# Netlify Configuration File (netlify.toml)
+# Place in the root of your frontend project
+# ==========================================
+
+[build]
+  # Directory that contains the deploy-ready HTML/CSS/JS assets
+  publish = "."
+
+# Single Page Application (SPA) redirect rule
+# Ensures client-side routing (React Router, etc.) works without 404s
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security and cache headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"

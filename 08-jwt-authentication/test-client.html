@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Auth Interactive Test Client</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 800px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.2);
+      color: #818cf8;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    label { font-size: 0.8rem; color: var(--text-muted); }
+    input, select {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.65rem 0.85rem;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    button:hover { filter: brightness(1.1); }
+    .btn-green { background: var(--success); }
+    .token-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px dashed var(--border);
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      word-break: break-all;
+      color: #38bdf8;
+      margin-bottom: 1rem;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+    .result-box {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      color: #a5f3fc;
+      min-height: 120px;
+    }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="badge">Practical 8: JWT Auth Client</span>
+      <h1>Interactive JWT Tester</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Test Signup, Login, Token generation, and Accessing Protected Endpoints.</p>
+    </div>
+
+    <div class="grid">
+      <!-- 1. Signup Form -->
+      <div class="card">
+        <h2>1. Sign Up</h2>
+        <form id="signupForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="sName" value="Alex Rivera" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="sEmail" value="alex@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="sPassword" value="Secret@123" required>
+          </div>
+          <div class="form-group">
+            <label>Role</label>
+            <select id="sRole">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <button type="submit">Register Account</button>
+        </form>
+      </div>
+
+      <!-- 2. Login Form -->
+      <div class="card">
+        <h2>2. Log In</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="lEmail" value="alex@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="lPassword" value="Secret@123" required>
+          </div>
+          <button type="submit" class="btn-green">Login & Get JWT</button>
+        </form>
+        <div style="margin-top: 1rem;">
+          <label style="font-size: 0.75rem; color: var(--text-muted);">Current Stored JWT:</label>
+          <div class="token-box" id="tokenDisplay">No token stored yet. Log in first.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Protected Route Actions -->
+    <div class="card">
+      <h2>3. Test Protected Routes (with Bearer Token)</h2>
+      <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+        <button id="btnProfile">Get /api/auth/profile</button>
+        <button id="btnAdmin" style="background: #e11d48;">Get /api/auth/admin-dashboard</button>
+        <button id="btnClear" style="background: #64748b;">Logout (Clear Token)</button>
+      </div>
+      <label>Server Response:</label>
+      <div class="result-box" id="resultBox">// Server response will appear here...</div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:5004/api/auth';
+    let storedToken = localStorage.getItem('jwt_auth_token') || '';
+
+    const tokenDisplay = document.getElementById('tokenDisplay');
+    const resultBox = document.getElementById('resultBox');
+
+    function updateTokenDisplay() {
+      tokenDisplay.textContent = storedToken || 'No token stored yet. Log in first.';
+    }
+    updateTokenDisplay();
+
+    // Signup handler
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch(`${API_BASE}/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('sName').value,
+            email: document.getElementById('sEmail').value,
+            password: document.getElementById('sPassword').value,
+            role: document.getElementById('sRole').value
+          })
+        });
+        const data = await res.json();
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resultBox.textContent = 'Error connecting to backend server at ' + API_BASE + '\n' + err.message;
+      }
+    });
+
+    // Login handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch(`${API_BASE}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('lEmail').value,
+            password: document.getElementById('lPassword').value
+          })
+        });
+        const data = await res.json();
+        resultBox.textContent = JSON.stringify(data, null, 2);
+
+        if (data.token) {
+          storedToken = data.token;
+          localStorage.setItem('jwt_auth_token', storedToken);
+          updateTokenDisplay();
+        }
+      } catch (err) {
+        resultBox.textContent = 'Error connecting to backend server at ' + API_BASE + '\n' + err.message;
+      }
+    });
+
+    // Fetch Profile
+    document.getElementById('btnProfile').addEventListener('click', async () => {
+      try {
+        const res = await fetch(`${API_BASE}/profile`, {
+          headers: { 'Authorization': `Bearer ${storedToken}` }
+        });
+        const data = await res.json();
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resultBox.textContent = err.message;
+      }
+    });
+
+    // Fetch Admin Dashboard
+    document.getElementById('btnAdmin').addEventListener('click', async () => {
+      try {
+        const res = await fetch(`${API_BASE}/admin-dashboard`, {
+          headers: { 'Authorization': `Bearer ${storedToken}` }
+        });
+        const data = await res.json();
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resultBox.textContent = err.message;
+      }
+    });
+
+    // Logout
+    document.getElementById('btnClear').addEventListener('click', () => {
+      storedToken = '';
+      localStorage.removeItem('jwt_auth_token');
+      updateTokenDisplay();
+      resultBox.textContent = 'Logged out. Token cleared from local storage.';
+    });
+  </script>
+</body>
+</html>

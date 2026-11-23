@@ -1,0 +1,19 @@
+# ==========================================
+# Render Blueprint Specification (render.yaml)
+# ==========================================
+
+services:
+  # Node.js Web Service
+  - type: web
+    name: fullstack-api-service
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true

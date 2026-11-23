@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Wireless Noise-Canceling Headphones",
+    "category": "Electronics",
+    "price": 149.99,
+    "rating": 4.8,
+    "stock": 25,
+    "emoji": "🎧",
+    "description": "High-fidelity audio with active noise cancellation and 30-hour battery life."
+  },
+  {
+    "id": 2,
+    "name": "Ergonomic Mechanical Keyboard",
+    "category": "Electronics",
+    "price": 89.99,
+    "rating": 4.9,
+    "stock": 40,
+    "emoji": "⌨️",
+    "description": "Custom mechanical switches, RGB backlighting, and detachable magnetic wrist rest."
+  },
+  {
+    "id": 3,
+    "name": "Ultra-Wide Gaming Monitor 34\"",
+    "category": "Electronics",
+    "price": 379.99,
+    "rating": 4.7,
+    "stock": 12,
+    "emoji": "🖥️",
+    "description": "Curved 144Hz 1ms IPS display with vivid HDR400 color gamut."
+  },
+  {
+    "id": 4,
+    "name": "Minimalist Ceramic Coffee Mug",
+    "category": "Home & Kitchen",
+    "price": 18.50,
+    "rating": 4.6,
+    "stock": 50,
+    "emoji": "☕",
+    "description": "Handcrafted matte ceramic finish with comfortable ergonomic grip."
+  },
+  {
+    "id": 5,
+    "name": "Stainless Steel Thermal Water Bottle",
+    "category": "Home & Kitchen",
+    "price": 24.99,
+    "rating": 4.5,
+    "stock": 35,
+    "emoji": "🧊",
+    "description": "Double-wall vacuum insulation keeps drinks cold for 24h or hot for 12h."
+  },
+  {
+    "id": 6,
+    "name": "Smart Fitness & Health Watch",
+    "category": "Wearables",
+    "price": 129.00,
+    "rating": 4.7,
+    "stock": 20,
+    "emoji": "⌚",
+    "description": "Heart rate tracking, sleep analytics, GPS workout tracking and water resistance."
+  },
+  {
+    "id": 7,
+    "name": "Eco-friendly Canvas Laptop Backpack",
+    "category": "Accessories",
+    "price": 54.00,
+    "rating": 4.8,
+    "stock": 18,
+    "emoji": "🎒",
+    "description": "Weather-resistant recycled fabric with dedicated padded 16\" laptop compartment."
+  },
+  {
+    "id": 8,
+    "name": "Desk Ambient LED Light Bar",
+    "category": "Accessories",
+    "price": 39.99,
+    "rating": 4.6,
+    "stock": 30,
+    "emoji": "💡",
+    "description": "Screen-mounting monitor light bar with adjustable temperature and zero glare."
+  }
+]

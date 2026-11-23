@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Basics - Form Validation & DOM Events</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form-container">
+      <div class="form-header">
+        <span class="pill-badge">Practical 2</span>
+        <h1>Create an Account</h1>
+        <p>Interactive DOM event handling and client-side form validation.</p>
+      </div>
+
+      <form id="registrationForm" novalidate>
+        <!-- Full Name -->
+        <div class="form-control" id="nameControl">
+          <label for="fullName">Full Name</label>
+          <div class="input-wrapper">
+            <input type="text" id="fullName" placeholder="e.g. John Doe" autocomplete="name">
+            <span class="status-icon"></span>
+          </div>
+          <small class="error-msg">Name is required</small>
+        </div>
+
+        <!-- Email -->
+        <div class="form-control" id="emailControl">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <input type="email" id="email" placeholder="e.g. john@example.com" autocomplete="email">
+            <span class="status-icon"></span>
+          </div>
+          <small class="error-msg">Valid email is required</small>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-control" id="phoneControl">
+          <label for="phone">Phone Number (10 digits)</label>
+          <div class="input-wrapper">
+            <input type="tel" id="phone" placeholder="e.g. 9876543210" maxlength="10">
+            <span class="status-icon"></span>
+          </div>
+          <small class="error-msg">Phone number must be exactly 10 digits</small>
+        </div>
+
+        <!-- Password -->
+        <div class="form-control" id="passwordControl">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" placeholder="At least 8 characters">
+            <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Toggle password visibility">👁️</button>
+            <span class="status-icon"></span>
+          </div>
+          <!-- Live Strength Meter -->
+          <div class="strength-bar-container">
+            <div class="strength-bar" id="strengthBar"></div>
+          </div>
+          <div class="strength-text" id="strengthText">Password strength: None</div>
+          <small class="error-msg">Must include upper, lower, number, and symbol</small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-control" id="confirmPasswordControl">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="confirmPassword" placeholder="Re-enter your password">
+            <span class="status-icon"></span>
+          </div>
+          <small class="error-msg">Passwords do not match</small>
+        </div>
+
+        <!-- Terms & Conditions Checkbox -->
+        <div class="checkbox-control" id="termsControl">
+          <label class="checkbox-label">
+            <input type="checkbox" id="terms">
+            <span>I agree to the <a href="#">Terms and Conditions</a></span>
+          </label>
+          <small class="error-msg">You must accept the terms to continue</small>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Register Now
+        </button>
+      </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+      <div class="modal-card">
+        <div class="modal-icon">🎉</div>
+        <h2>Registration Successful!</h2>
+        <p>All client-side DOM validations passed successfully.</p>
+        <div class="modal-data" id="submittedData">
+          <!-- Injected via JavaScript -->
+        </div>
+        <button class="btn-modal-close" id="closeModalBtn">Done & Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
